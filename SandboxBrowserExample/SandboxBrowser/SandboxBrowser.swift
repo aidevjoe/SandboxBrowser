@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum FileType: String {
+public enum FileType: String {
     case directory = "directory"
     case gif = "gif"
     case jpg = "jpg"
@@ -23,11 +23,11 @@ enum FileType: String {
 }
 
 public struct FileItem {
-    var name: String
-    var path: String
-    var type: FileType
+    public var name: String
+    public var path: String
+    public var type: FileType
     
-    var modificationDate: Date {
+    public var modificationDate: Date {
         do {
             let attr = try FileManager.default.attributesOfItem(atPath: path)
             if let modificationDate = attr[FileAttributeKey.modificationDate] as? Date {
@@ -40,7 +40,7 @@ public struct FileItem {
         }
     }
     
-    fileprivate var image: UIImage {
+    var image: UIImage {
         
         var fileName = "file"
         switch self.type {
@@ -59,8 +59,8 @@ public struct FileItem {
         let path = bundle.path(forResource: "Resources", ofType: "bundle")
         
         let resBundle = Bundle(path: path!)!
-
-    
+        
+        
         return UIImage(contentsOfFile: resBundle.path(forResource: fileName, ofType: "png")!)!
     }
 }
@@ -110,7 +110,7 @@ public class FileListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-
+    
     var didSelectFile: ((FileItem, FileListViewController) -> ())?
     var initialPath: URL?
     
@@ -168,7 +168,7 @@ public class FileListViewController: UIViewController {
             
             var pathExtension = URL(fileURLWithPath: fullpath).pathExtension.lowercased()
             if pathExtension.hasPrefix("sqlite") || pathExtension == "db" { pathExtension = "sqlite" }
-
+            
             let filetype: FileType = isDir.boolValue ? .directory : FileType(rawValue: pathExtension) ?? .file
             let fileItem = FileItem(name: subpath, path: fullpath, type: filetype)
             filelist.append(fileItem)
@@ -231,7 +231,7 @@ extension FileListViewController: UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(sandbox, animated: true)
         default:
             didSelectFile?(item, self)
-//            shareFile(item.path)
+            //            shareFile(item.path)
         }
     }
 }
