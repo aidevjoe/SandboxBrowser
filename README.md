@@ -3,16 +3,16 @@
 A simple iOS sandbox file browser, enable you to view sandbox file system on iOS device, share files via airdrop, super convenient when you want to send log files from iOS device to Mac. reference from  [AirSandbox](https://github.com/music4kid/AirSandbox), Thanks !
 
 ### Screenshots
-<img src="https://github.com/Joe0708/AirScanbox/raw/master/Screenshot/SimulatorScreenShot1.png" width="375">
-<img src="https://github.com/Joe0708/AirScanbox/raw/master/Screenshot/SimulatorScreenShot2.png" width="375">
+
+<img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot1.png" width="375">
+<img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot2.png" width="375">
 
 ### Installation
 
 To integrate SandboxBrowser into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```
-   pod 'SandboxBrowser'
-
+pod 'SandboxBrowser'
 ```
 
 Then, run pod install.
