@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 spec.name             = 'SandboxBrowser'
-spec.version          = '0.0.2'
+spec.version          = '0.0.3'
 spec.license          = { :type => 'MIT' }
 spec.homepage         = 'https://github.com/Joe0708/SandboxBrowser'
 spec.authors          = { 'Joe' => 'joesir7@foxmail.com' }
