@@ -1,6 +1,6 @@
 //
-//  AirScanbox.swift
-//  AirScanbox
+//  SandboxBrowser.swift
+//  SandboxBrowser
 //
 //  Created by Joe on 2017/8/25.
 //  Copyright © 2017年 Joe. All rights reserved.
@@ -20,6 +20,18 @@ public enum FileType: String {
     case plist = "plist"
     case file = "file"
     case sqlite = "sqlite"
+    case log = "log"
+    
+    var fileName: String {
+        switch self {
+        case .directory: return "directory"
+        case .jpg, .pdf, .gif, .jpeg: return "image"
+        case .plist: return "plist"
+        case .sqlite: return "sqlite"
+        case .log: return "log"
+        default: return "file"
+        }
+    }
 }
 
 public struct FileItem {
@@ -30,10 +42,7 @@ public struct FileItem {
     public var modificationDate: Date {
         do {
             let attr = try FileManager.default.attributesOfItem(atPath: path)
-            if let modificationDate = attr[FileAttributeKey.modificationDate] as? Date {
-                return modificationDate
-            }
-            return Date()
+            return attr[FileAttributeKey.modificationDate] as? Date ?? Date()
         } catch {
             print(error)
             return Date()
@@ -41,27 +50,11 @@ public struct FileItem {
     }
     
     var image: UIImage {
-        
-        var fileName = "file"
-        switch self.type {
-        case .directory:
-            fileName = "folder"
-        case .plist:
-            fileName = "plist"
-        case .jpg, .png, .gif, .jpeg:
-            fileName = "image"
-        case .sqlite:
-            fileName = "database"
-        default:
-            fileName = "file"
-        }
         let bundle = Bundle(for: FileListViewController.self)
         let path = bundle.path(forResource: "Resources", ofType: "bundle")
-        
         let resBundle = Bundle(path: path!)!
         
-        
-        return UIImage(contentsOfFile: resBundle.path(forResource: fileName, ofType: "png")!)!
+        return UIImage(contentsOfFile: resBundle.path(forResource: type.fileName, ofType: "png")!)!
     }
 }
 
@@ -89,7 +82,7 @@ public class SandboxBrowser: UINavigationController {
 public class FileListViewController: UIViewController {
     
     fileprivate struct Misc {
-        static let cellIdentifier = "FileItemCell"
+        static let cellIdentifier = "FileCell"
     }
     
     private lazy var tableView: UITableView = {
@@ -183,18 +176,38 @@ public class FileListViewController: UIViewController {
             applicationActivities: nil)
         
         controller.excludedActivityTypes = [
-            UIActivityType.postToTwitter, UIActivityType.postToFacebook,
-            UIActivityType.postToWeibo, UIActivityType.message, UIActivityType.mail,
-            UIActivityType.print, UIActivityType.copyToPasteboard,
-            UIActivityType.assignToContact, UIActivityType.saveToCameraRoll,
-            UIActivityType.addToReadingList, UIActivityType.postToFlickr,
-            UIActivityType.postToVimeo, UIActivityType.postToTencentWeibo]
+            .postToTwitter, .postToFacebook, .postToTencentWeibo, .postToWeibo,
+            .postToFlickr, .postToVimeo, .message, .mail, .addToReadingList,
+            .print, .copyToPasteboard, .assignToContact, .saveToCameraRoll,
+        ]
         
         if UIDevice.current.model.hasPrefix("iPad") {
             controller.popoverPresentationController?.sourceView = view
             controller.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.size.width * 0.5, y: UIScreen.main.bounds.size.height * 0.5, width: 10, height: 10)
         }
         self.present(controller, animated: true, completion: nil)
+    }
+}
+
+class FileCell: UITableViewCell {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        var imageFrame = imageView!.frame
+        imageFrame.size.width = 55
+        imageFrame.size.height = 55
+        imageView?.frame = imageFrame
+        imageView?.center.y = contentView.center.y
+        
+        var textLabelFrame = textLabel!.frame
+        textLabelFrame.origin.x = imageFrame.maxX + 15
+        textLabelFrame.origin.y = textLabelFrame.origin.y - 5
+        textLabel?.frame = textLabelFrame
+        
+        var detailLabelFrame = detailTextLabel!.frame
+        detailLabelFrame.origin.x = textLabelFrame.origin.x
+        detailLabelFrame.origin.y = detailLabelFrame.origin.y + 5
+        detailTextLabel?.frame = detailLabelFrame
     }
 }
 
@@ -205,7 +218,7 @@ extension FileListViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: Misc.cellIdentifier)
-        if cell == nil { cell = UITableViewCell(style: .subtitle, reuseIdentifier: Misc.cellIdentifier) }
+        if cell == nil { cell = FileCell(style: .subtitle, reuseIdentifier: Misc.cellIdentifier) }
         
         let item = items[indexPath.row]
         cell?.textLabel?.text = item.name
@@ -231,7 +244,6 @@ extension FileListViewController: UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(sandbox, animated: true)
         default:
             didSelectFile?(item, self)
-            //            shareFile(item.path)
         }
     }
 }

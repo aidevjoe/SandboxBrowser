@@ -4,9 +4,7 @@ A simple iOS sandbox file browser, enable you to view sandbox file system on iOS
 
 ### Screenshots
 
-<img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot1.png" width="375">
-<img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot2.png" width="375">
-
+<img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot1.png" width="280">   <img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot2.png" width="280"> <img src="https://github.com/Joe0708/SandboxBrowser/raw/master/Screenshot/SimulatorScreenShot3.png" width="280">
 ### Installation
 
 To integrate SandboxBrowser into your Xcode project using CocoaPods, specify it in your Podfile:
@@ -45,5 +43,9 @@ sanboxBrowser.didSelectFile = { file, vc in
 }
 ```
 
+Long press file share via AirDrop
+
 ### License
 MIT
+
+
