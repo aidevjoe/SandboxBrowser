@@ -181,7 +181,7 @@ public class FileListViewController: UIViewController {
             .print, .copyToPasteboard, .assignToContact, .saveToCameraRoll,
         ]
         
-        if UIDevice.current.model.hasPrefix("iPad") {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             controller.popoverPresentationController?.sourceView = view
             controller.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.size.width * 0.5, y: UIScreen.main.bounds.size.height * 0.5, width: 10, height: 10)
         }
