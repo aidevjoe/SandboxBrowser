@@ -1,5 +1,9 @@
 ### SandboxBrowser
 
+[![Version](https://img.shields.io/cocoapods/v/SandboxBrowser.svg?style=flat)](http://cocoapods.org/pods/SandboxBrowser)
+[![License](https://img.shields.io/cocoapods/l/SandboxBrowser.svg?style=flat)](http://cocoapods.org/pods/SandboxBrowser)
+[![Platform](https://img.shields.io/cocoapods/p/SandboxBrowser.svg?style=flat)](http://cocoapods.org/pods/SandboxBrowser)
+
 A simple iOS sandbox file browser, enable you to view sandbox file system on iOS device, share files via airdrop, super convenient when you want to send log files from iOS device to Mac. reference from  [AirSandbox](https://github.com/music4kid/AirSandbox), Thanks !
 
 ### Screenshots
@@ -44,6 +48,9 @@ sanboxBrowser.didSelectFile = { file, vc in
 ```
 
 Long press file share via AirDrop
+
+### Other
+A convenient log console ![Library](https://github.com/Joe0708/LogConsole)
 
 ### License
 MIT
