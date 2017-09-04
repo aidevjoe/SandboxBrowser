@@ -104,10 +104,10 @@ public class FileListViewController: UIViewController {
         }
     }
     
-    var didSelectFile: ((FileItem, FileListViewController) -> ())?
+    public var didSelectFile: ((FileItem, FileListViewController) -> ())?
     var initialPath: URL?
     
-    convenience init(initialPath: URL) {
+    public convenience init(initialPath: URL) {
         self.init()
         
         self.initialPath = initialPath
