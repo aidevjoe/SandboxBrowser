@@ -28,21 +28,21 @@ import SandboxBrowser
 ```
 
 ```
-let sanboxBrowser = SandboxBrowser()
-present(sanboxBrowser, animated: true, completion: nil)
+let sandboxBrowser = SandboxBrowser()
+present(sandboxBrowser, animated: true, completion: nil)
 
 ```
 Open the sandbox directory by default, and you can specify the directory
 
 ```
-let sanboxBrowser = SandboxBrowser(initialPath: customURL)
+let sandboxBrowser = SandboxBrowser(initialPath: customURL)
 
 ```
 
 Use the didSelectFile closure to change FileBrowser's behaviour when a file is selected.
 
 ```
-sanboxBrowser.didSelectFile = { file, vc in
+sandboxBrowser.didSelectFile = { file, vc in
     print(file.name, file.type)
 }
 ```
