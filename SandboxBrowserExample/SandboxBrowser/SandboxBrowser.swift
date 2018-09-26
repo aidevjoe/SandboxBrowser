@@ -129,7 +129,7 @@ public class FileListViewController: UIViewController {
             action: #selector(close))
     }
     
-    func onLongPress(gesture: UILongPressGestureRecognizer) {
+    @objc func onLongPress(gesture: UILongPressGestureRecognizer) {
         
         let point = gesture.location(in: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
@@ -137,7 +137,7 @@ public class FileListViewController: UIViewController {
         if item.type != .directory { shareFile(item.path) }
     }
     
-    func close() {
+    @objc func close() {
         dismiss(animated: true, completion: nil)
     }
     
@@ -177,7 +177,7 @@ public class FileListViewController: UIViewController {
         
         controller.excludedActivityTypes = [
             .postToTwitter, .postToFacebook, .postToTencentWeibo, .postToWeibo,
-            .postToFlickr, .postToVimeo, .message, .mail, .addToReadingList,
+            .postToFlickr, .postToVimeo, .message, .addToReadingList,
             .print, .copyToPasteboard, .assignToContact, .saveToCameraRoll,
         ]
         
@@ -185,7 +185,11 @@ public class FileListViewController: UIViewController {
             controller.popoverPresentationController?.sourceView = view
             controller.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.size.width * 0.5, y: UIScreen.main.bounds.size.height * 0.5, width: 10, height: 10)
         }
-        self.present(controller, animated: true, completion: nil)
+        if (self.presentedViewController == nil) {
+            // The "if" test prevents "Warning: Attempt to present UIActivityViewController:...
+            // on which is already presenting" warning messages from occurring.
+            self.present(controller, animated: true, completion: nil)
+        }
     }
 }
 
