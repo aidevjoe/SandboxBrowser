@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let testUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
         let plistpath = testUrl?.path.appending("/example.plist")
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.keyWindow?.addGestureRecognizer(pan)
     }
     
-    func onSwipeDetected(){
+    @objc func onSwipeDetected(){
         
         let sandboxBrowser = SandboxBrowser()
         sandboxBrowser.didSelectFile = { file, vc in
