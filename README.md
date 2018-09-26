@@ -24,19 +24,16 @@ Then, run pod install.
 
 ```
 import SandboxBrowser
-
 ```
 
 ```
 let sandboxBrowser = SandboxBrowser()
 present(sandboxBrowser, animated: true, completion: nil)
-
 ```
 Open the sandbox directory by default, and you can specify the directory
 
 ```
 let sandboxBrowser = SandboxBrowser(initialPath: customURL)
-
 ```
 
 Use the didSelectFile closure to change FileBrowser's behaviour when a file is selected.
@@ -48,9 +45,6 @@ sandboxBrowser.didSelectFile = { file, vc in
 ```
 
 Long press file share via AirDrop
-
-### Other
-A convenient log console ![Library](https://github.com/Joe0708/LogConsole)
 
 ### License
 MIT
