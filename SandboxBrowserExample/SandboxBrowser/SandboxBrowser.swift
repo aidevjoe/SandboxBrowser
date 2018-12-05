@@ -6,8 +6,8 @@
 //  Copyright © 2017年 Joe. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import QuickLook
 
 public enum FileType: String {
     case directory = "directory"
@@ -81,7 +81,7 @@ public class SandboxBrowser: UINavigationController {
 
 public class FileListViewController: UIViewController {
     
-    fileprivate struct Misc {
+    private struct Misc {
         static let cellIdentifier = "FileCell"
     }
     
@@ -98,7 +98,7 @@ public class FileListViewController: UIViewController {
         return view
     }()
     
-    fileprivate var items: [FileItem] = [] {
+    private var items: [FileItem] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -106,6 +106,7 @@ public class FileListViewController: UIViewController {
     
     public var didSelectFile: ((FileItem, FileListViewController) -> ())?
     var initialPath: URL?
+    private var previewUrl: NSURL?
     
     public convenience init(initialPath: URL) {
         self.init()
@@ -191,6 +192,20 @@ public class FileListViewController: UIViewController {
             self.present(controller, animated: true, completion: nil)
         }
     }
+    
+    func preview(_ item: FileItem) {
+        
+        let url = NSURL(fileURLWithPath: item.path, isDirectory: item.type == .directory)
+        guard QLPreviewController.canPreview(url) else {
+            return
+        }
+        
+        previewUrl = url
+        let qlController = QLPreviewController()
+        qlController.dataSource = self
+        present(qlController, animated: true, completion: nil)
+    }
+    
 }
 
 class FileCell: UITableViewCell {
@@ -247,7 +262,24 @@ extension FileListViewController: UITableViewDelegate, UITableViewDataSource {
             sandbox.didSelectFile = didSelectFile
             self.navigationController?.pushViewController(sandbox, animated: true)
         default:
-            didSelectFile?(item, self)
+            if didSelectFile != nil {
+                didSelectFile?(item, self)
+            } else {
+                preview(item)
+            }
         }
     }
+}
+
+
+extension FileListViewController: QLPreviewControllerDataSource {
+    
+    public func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    
+    public func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        return previewUrl!
+    }
+    
 }

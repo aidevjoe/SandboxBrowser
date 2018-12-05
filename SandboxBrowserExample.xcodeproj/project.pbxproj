@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F6D1B2C21B76EA300D006DC /* iOS_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F6D1B2B21B76EA300D006DC /* iOS_logo.jpg */; };
 		770DD25A1F5302D000D054EB /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770DD2591F5302D000D054EB /* Resources.bundle */; };
 		77FD506E1F52E0690037DAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FD50631F52E0690037DAE1 /* AppDelegate.swift */; };
 		77FD506F1F52E0690037DAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77FD50641F52E0690037DAE1 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F6D1B2B21B76EA300D006DC /* iOS_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iOS_logo.jpg; sourceTree = "<group>"; };
 		770DD2591F5302D000D054EB /* Resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resources.bundle; sourceTree = "<group>"; };
 		77FD50631F52E0690037DAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77FD50641F52E0690037DAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				77FD50631F52E0690037DAE1 /* AppDelegate.swift */,
+				5F6D1B2B21B76EA300D006DC /* iOS_logo.jpg */,
 				77FD50641F52E0690037DAE1 /* Assets.xcassets */,
 				77FD50691F52E0690037DAE1 /* Info.plist */,
 				77FD50651F52E0690037DAE1 /* LaunchScreen.storyboard */,
@@ -148,6 +151,7 @@
 				770DD25A1F5302D000D054EB /* Resources.bundle in Resources */,
 				77FD50711F52E0690037DAE1 /* Main.storyboard in Resources */,
 				77FD506F1F52E0690037DAE1 /* Assets.xcassets in Resources */,
+				5F6D1B2C21B76EA300D006DC /* iOS_logo.jpg in Resources */,
 				77FD50701F52E0690037DAE1 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
