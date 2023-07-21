@@ -90,7 +90,7 @@ public class FileListViewController: UIViewController {
         view.backgroundColor = .white
         view.delegate = self
         view.dataSource = self
-        view.rowHeight = 70
+        view.rowHeight = 52
         view.separatorInset = .zero
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(gesture:)))
         longPress.minimumPressDuration = 0.5
@@ -121,12 +121,7 @@ public class FileListViewController: UIViewController {
         view.addSubview(tableView)
         
         loadPath(initialPath!.relativePath)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Close",
-            style: .plain,
-            target: self,
-            action: #selector(close))
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .stop, target: self, action: #selector(close))
     }
     
     @objc func onLongPress(gesture: UILongPressGestureRecognizer) {
@@ -142,18 +137,15 @@ public class FileListViewController: UIViewController {
     }
     
     func loadPath(_ path: String = "") {
-        var filelist = [FileItem]()
         
-        var paths: [String] = []
-        
-        do {
-            paths = try FileManager.default.contentsOfDirectory(atPath: path)
-            guard paths.count > 0 else { return }
-        } catch {
-            print(error.localizedDescription)
+        guard let paths = try? FileManager.default.contentsOfDirectory(atPath: path) else {
+          return
         }
         
-        paths.filter { !$0.hasPrefix(".") }.forEach { subpath in
+        var filelist: [FileItem] = []
+        paths
+            .filter { !$0.hasPrefix(".") }
+            .forEach { subpath in
             var isDir: ObjCBool = ObjCBool(false)
             
             let fullpath = path.appending("/" + subpath)
@@ -198,19 +190,19 @@ class FileCell: UITableViewCell {
         super.layoutSubviews()
         
         var imageFrame = imageView!.frame
-        imageFrame.size.width = 55
-        imageFrame.size.height = 55
+        imageFrame.size.width = 42
+        imageFrame.size.height = 42
         imageView?.frame = imageFrame
         imageView?.center.y = contentView.center.y
         
         var textLabelFrame = textLabel!.frame
-        textLabelFrame.origin.x = imageFrame.maxX + 15
-        textLabelFrame.origin.y = textLabelFrame.origin.y - 5
+        textLabelFrame.origin.x = imageFrame.maxX + 10
+        textLabelFrame.origin.y = textLabelFrame.origin.y - 3
         textLabel?.frame = textLabelFrame
         
         var detailLabelFrame = detailTextLabel!.frame
         detailLabelFrame.origin.x = textLabelFrame.origin.x
-        detailLabelFrame.origin.y = detailLabelFrame.origin.y + 5
+        detailLabelFrame.origin.y = detailLabelFrame.origin.y + 3
         detailTextLabel?.frame = detailLabelFrame
     }
 }
@@ -230,6 +222,11 @@ extension FileListViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.detailTextLabel?.text = DateFormatter.localizedString(from: item.modificationDate,
                                                                     dateStyle: .medium,
                                                                     timeStyle: .medium)
+        if #available(iOS 13.0, *) {
+            cell?.detailTextLabel?.textColor = .secondaryLabel
+        } else {
+            cell?.detailTextLabel?.textColor = .systemGray
+        }
         cell?.accessoryType = item.type == .directory ? .disclosureIndicator : .none
         return cell!
     }
