@@ -81,7 +81,7 @@ public class SandboxBrowser: UINavigationController {
 
 public class FileListViewController: UIViewController {
     
-    fileprivate struct Misc {
+    private struct Misc {
         static let cellIdentifier = "FileCell"
     }
     
@@ -98,14 +98,14 @@ public class FileListViewController: UIViewController {
         return view
     }()
     
-    fileprivate var items: [FileItem] = [] {
+    private var items: [FileItem] = [] {
         didSet {
             tableView.reloadData()
         }
     }
     
     public var didSelectFile: ((FileItem, FileListViewController) -> ())?
-    var initialPath: URL?
+    private var initialPath: URL?
     
     public convenience init(initialPath: URL) {
         self.init()
@@ -124,7 +124,7 @@ public class FileListViewController: UIViewController {
         navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .stop, target: self, action: #selector(close))
     }
     
-    @objc func onLongPress(gesture: UILongPressGestureRecognizer) {
+    @objc private func onLongPress(gesture: UILongPressGestureRecognizer) {
         
         let point = gesture.location(in: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
@@ -132,11 +132,11 @@ public class FileListViewController: UIViewController {
         if item.type != .directory { shareFile(item.path) }
     }
     
-    @objc func close() {
+    @objc private func close() {
         dismiss(animated: true, completion: nil)
     }
     
-    func loadPath(_ path: String = "") {
+    private func loadPath(_ path: String = "") {
         
         guard let paths = try? FileManager.default.contentsOfDirectory(atPath: path) else {
           return
@@ -161,7 +161,7 @@ public class FileListViewController: UIViewController {
         items = filelist
     }
     
-    func shareFile(_ filePath: String) {
+    private func shareFile(_ filePath: String) {
         
         let controller = UIActivityViewController(
             activityItems: [NSURL(fileURLWithPath: filePath)],
@@ -185,7 +185,7 @@ public class FileListViewController: UIViewController {
     }
 }
 
-class FileCell: UITableViewCell {
+final class FileCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
